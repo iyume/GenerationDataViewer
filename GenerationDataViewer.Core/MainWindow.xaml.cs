@@ -1,5 +1,6 @@
 ﻿using System.IO;
 using System.Net.Http;
+using System.Text.Json;
 using System.Windows;
 using System.Windows.Documents;
 using System.Windows.Media;
@@ -141,7 +142,7 @@ public partial class MainWindow : Window
                         break;
                     case [{ Keyword: "prompt" }, { Keyword: "workflow" }]:
                         SetUploadedImageFormat("ComfyUI");
-                        LoadGenerationDataComfyui(pngMetadata.TextData[0].Value);
+                        LoadGenerationDataComfyui(pngMetadata.TextData[0].Value, pngMetadata.TextData[1].Value);
                         break;
                     default:
                         UploadedImageDescription.Visibility = Visibility.Collapsed;
@@ -202,11 +203,6 @@ public partial class MainWindow : Window
         A1111Prompt.Text = data;
     }
 
-    private void ParseComfyuiGenerationData(string data)
-    {
-        // ComfyUI prompt / workflow data (json)
-    }
-
     private void ClearExistImageData()
     {
         A1111Prompt.Text = string.Empty;
@@ -223,10 +219,17 @@ public partial class MainWindow : Window
         ParseA1111GenerationData(data);
     }
 
-    private void LoadGenerationDataComfyui(string data)
+    private void LoadGenerationDataComfyui(string prompt, string workflow)
     {
         LayoutGenerationDataA1111.Visibility = Visibility.Collapsed;
         LayoutGenerationDataComfyui.Visibility = Visibility.Visible;
-        ParseComfyuiGenerationData(data);
+        var promptJson = JsonSerializer.Deserialize<object>(prompt);
+        var workflowJson = JsonSerializer.Deserialize<object>(workflow);
+        promptJson ??= new { };
+        workflowJson ??= new { };
+        // https://docs.microsoft.com/en-us/dotnet/api/system.text.json.jsonserializeroptions?view=net-8.0
+        ComfyuiPrompt.Text = JsonSerializer.Serialize(promptJson, new JsonSerializerOptions { WriteIndented = true });
+        ComfyuiWorkflow.Text =
+            JsonSerializer.Serialize(workflowJson, new JsonSerializerOptions { WriteIndented = true });
     }
 }

@@ -60,12 +60,12 @@
                     </Grid.ColumnDefinitions>
                     <StackPanel Grid.Column="0" Margin="4,0">
                         <Label>Prompt</Label>
-                        <TextBox Name="ComfyuiPrompt" Height="100" AcceptsReturn="True" TextWrapping="Wrap"
+                        <TextBox Name="ComfyuiPrompt" Height="200" AcceptsReturn="True" TextWrapping="Wrap"
                                  VerticalScrollBarVisibility="Auto" />
                     </StackPanel>
                     <StackPanel Grid.Column="1" Margin="4,0">
                         <Label>Workflow</Label>
-                        <TextBox Name="ComfyuiWorkflow" Height="100" AcceptsReturn="True" TextWrapping="Wrap"
+                        <TextBox Name="ComfyuiWorkflow" Height="200" AcceptsReturn="True" TextWrapping="Wrap"
                                  VerticalScrollBarVisibility="Auto" />
                     </StackPanel>
                 </Grid>
