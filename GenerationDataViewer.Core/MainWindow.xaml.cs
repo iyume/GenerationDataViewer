@@ -17,7 +17,6 @@ namespace GenerationDataViewer.Core;
 ///     Interaction logic for MainWindow.xaml
 /// </summary>
 public partial class MainWindow : Window
-// wpf-ui ui:FluentWindow is already inherited from Window
 {
     public MainWindow()
     {
@@ -38,11 +37,6 @@ public partial class MainWindow : Window
         UploadImageInformation.Foreground = null;
         UploadImageInformation.Text = "Uploading image...";
 
-        // try?
-        // BitmapImage bitmap = new();
-        // bitmap.BeginInit();
-        // bitmap.UriSource = new Uri(openFileDialog.FileName);
-        // bitmap.EndInit();
         // "pack://application:,,,/AssemblyName;component/Resources/logo.png"
         // AssemblyShortName[;Version][;PublicKey];component/Path
         var fileBytes = File.ReadAllBytes(openFileDialog.FileName);
@@ -56,7 +50,7 @@ public partial class MainWindow : Window
 
         UploadedImage.Height = 200;
         UploadedImage.Source = bitmap;
-        UpdateImage(ms);
+        LoadImage(ms);
         UploadImageInformation.Foreground = Brushes.Green;
         UploadImageInformation.Text = "Image uploaded";
     }
@@ -93,33 +87,6 @@ public partial class MainWindow : Window
             fileStream = await response.Content.ReadAsStreamAsync();
         }
 
-        // BitmapImage bitmap = new();
-        // bitmap.DownloadCompleted += (s, e) =>
-        // {
-        //     UploadImageInformation.Foreground = Brushes.Green;
-        //     UploadImageInformation.Text = "Image uploaded";
-        // };
-        // bitmap.DownloadFailed += (s, e) =>
-        // {
-        //     UploadImageInformation.Foreground = Brushes.Red;
-        //     UploadImageInformation.Text = "Failed to download image";
-        // };
-        //
-        // bitmap.BeginInit();
-        // try
-        // {
-        //     bitmap.UriSource = new Uri(UploadImageUrl.Text, UriKind.Absolute);
-        // }
-        // catch (Exception ex)
-        // {
-        //     UploadImageInformation.Foreground = Brushes.Black;
-        //     UploadImageInformation.Text = null;
-        //     MessageBox.Show(ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //     return;
-        // }
-        //
-        // bitmap.EndInit();
-
         BitmapImage bitmap = new();
         try
         {
@@ -137,15 +104,18 @@ public partial class MainWindow : Window
 
         UploadedImage.Height = 300;
         UploadedImage.Source = bitmap;
-        ClearExistImageData();
-        UpdateImage(fileStream);
+        LoadImage(fileStream);
         UploadImageInformation.Foreground = Brushes.Green;
         UploadImageInformation.Text = "Image uploaded";
     }
 
-    // FileStream / MemoryStream are derived from Stream
-    private void UpdateImage(Stream ms)
+    /// <summary>
+    ///     Load image from stream, clear and update image data.
+    /// </summary>
+    /// <param name="ms"></param>
+    private void LoadImage(Stream ms)
     {
+        ClearExistImageData();
         ms.Position = 0;
         ImageInfo imageInfo;
         try
