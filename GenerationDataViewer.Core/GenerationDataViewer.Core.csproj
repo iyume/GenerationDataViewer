@@ -2,6 +2,8 @@
 
     <PropertyGroup>
         <Version>1.0.1</Version>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <PackageReadmeFile>README.md</PackageReadmeFile>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
@@ -10,6 +12,9 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="../LICENSE" Pack="true" Visible="false" PackagePath=""/>
+        <None Include="../README.md" Pack="true" PackagePath=""/>
+
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5"/>
         <PackageReference Include="WPF-UI" Version="4.0.0-rc.2"/>
     </ItemGroup>
