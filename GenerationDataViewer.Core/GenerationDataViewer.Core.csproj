@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <Version>1.0.1</Version>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
@@ -11,10 +12,6 @@
     <ItemGroup>
         <PackageReference Include="SixLabors.ImageSharp" Version="3.1.5"/>
         <PackageReference Include="WPF-UI" Version="4.0.0-rc.2"/>
-    </ItemGroup>
-
-    <ItemGroup>
-        <Folder Include="ImageDataReader\"/>
     </ItemGroup>
 
 </Project>

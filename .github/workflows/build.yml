@@ -1,0 +1,49 @@
+name: .NET Core Desktop
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    strategy:
+      matrix:
+        platform: [win-x64, linux-x64]
+
+    runs-on: windows-latest  # For a list of available runner types, refer to
+    # https://help.github.com/en/actions/reference/workflow-syntax-for-github-actions#jobsjob_idruns-on
+
+    env:
+      Project_Name: GenerationDataViewer.Core
+      Build_Platform: net8.0-windows
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Install dependencies
+        run: dotnet restore
+
+      - name: Build executable file
+        # https://learn.microsoft.com/en-us/dotnet/core/deploying/single-file/overview?tabs=cli
+        # https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-build
+        run: dotnet publish ${{ env.Project_Name }} -r ${{ matrix.platform }} -p:PublishSingleFile=true --self-contained false
+
+      - name: Upload dotnet test results
+        uses: actions/upload-artifact@v4
+        env:
+          OUTPUT_SUFFIX: ${{ matrix.platform == 'win-x64' && '.exe' || '' }}
+        with:
+          name: GenerationDataViewer-${{ matrix.platform }}${{ env.OUTPUT_SUFFIX }}
+          path: ${{ env.Project_Name }}/bin/Release/${{ env.Build_Platform }}/${{ matrix.platform }}/publish/${{ env.Project_Name }}${{ env.OUTPUT_SUFFIX }}
