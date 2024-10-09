@@ -1,6 +1,8 @@
 # GenerationDataViewer
 
-Stable diffusion generation data viewer / editor in fluent ui.
+Stable diffusion generation data viewer written in fluent ui.
+
+![](./assets/screenshot.png)
 
 Framework:
 
@@ -14,5 +16,5 @@ Dependency:
 Features:
 
 - [x] View A1111 (webui) generation data.
-- [ ] View ComfyUI generation data.
+- [x] View ComfyUI generation data.
 - [ ] Edit the generation data and save as.
