@@ -4,6 +4,10 @@
         <Version>1.0.1</Version>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
         <PackageReadmeFile>README.md</PackageReadmeFile>
+        <Description>Stable diffusion generation data viewer written in fluent ui.</Description>
+        <RepositoryType>git</RepositoryType>
+        <RepositoryUrl>https://github.com/iyume/GenerationDataViewer.git</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/iyume/GenerationDataViewer</PackageProjectUrl>
         <OutputType>WinExe</OutputType>
         <TargetFramework>net8.0-windows</TargetFramework>
         <Nullable>enable</Nullable>
